@@ -1,0 +1,63 @@
+.base {
+	position: relative;
+	transition: opacity 900ms ease-out 500ms;
+	opacity: 0;
+
+	&--drawing {
+		opacity: 1;
+	}
+}
+
+.container,
+.img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 200%;
+	transform: translate(-50%, -50%);
+}
+
+.img,
+.svg {
+	transition: opacity 3s ease-out;
+}
+
+.container {
+	max-height: rem(600);
+
+	@include breakpoint(small down) {
+		max-width: rem(500);
+	}
+}
+
+.img {
+	opacity: 0;
+
+	@media (prefers-reduced-motion: reduce) {
+		opacity: 1;
+	}
+}
+
+.svg {
+	pointer-events: none;
+
+	path {
+		stroke-width: 3;
+		stroke: #66c62e;
+		fill: none;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.base {
+		opacity: 1 !important;
+	}
+
+	.img {
+		opacity: 1 !important;
+	}
+
+	.svg {
+		opacity: 0 !important;
+	}
+}

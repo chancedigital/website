@@ -1,0 +1,64 @@
+.tools {
+	@include section-padded-y;
+	@include full-width;
+	background: var(--cd-white);
+}
+
+.container {
+	@include make-container(wide);
+}
+
+.heading {
+	@include section-heading;
+}
+
+.list {
+	@include no-bullet;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	margin: #{$mg-vertical-sm / 2} 0 $mg-vertical-sm 0;
+	padding: 0;
+}
+
+.item {
+	position: relative;
+	flex: 0 0 25%;
+	margin: $mg-vertical-sm / 2;
+
+	@include breakpoint(medium) {
+		flex: 0 0 11%;
+		margin: $mg-vertical-sm;
+	}
+
+	@include breakpoint(large) {
+		flex: 0 0 12%;
+	}
+
+	@include breakpoint(xlarge) {
+		flex: 0 0 7%;
+	}
+
+	&::before {
+		position: absolute;
+		content: "";
+		display: block;
+		top: $mg-vertical-sm * -1;
+		left: $mg-vertical-sm * -1;
+		right: $mg-vertical-sm * -1;
+		bottom: $mg-vertical-sm * -1;
+		background-color: transparent;
+		pointer-events: none;
+	}
+
+	&:focus-within::before {
+		@include focus-ring;
+	}
+}
+
+.icon {
+	&:focus {
+		outline: 0;
+	}
+}

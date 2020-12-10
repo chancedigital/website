@@ -1,0 +1,90 @@
+.logo {
+  $self: &;
+  display: inline-block;
+  width: rem(284);
+  height: rem(48);
+  margin: $mg-vertical-sm $mg-horiz;
+  overflow: hidden;
+  opacity: 1;
+  background: url("#{$path-img}/logos/logo-long-box-color.svg") no-repeat center center;
+  background-size: contain;
+  text-indent: 100%;
+  vertical-align: top;
+  white-space: nowrap;
+
+  &--noMargin {
+    margin: 0;
+  }
+
+  &--black {
+    background-image: url("#{$path-img}/logos/logo-long-box-black.svg");
+  }
+
+  &--white {
+    background-image: url("#{$path-img}/logos/logo-long-box-white.svg");
+  }
+
+  &--alt {
+    width: rem(107);
+    height: rem(60);
+    background-image: url("#{$path-img}/logos/logo-short-color.svg");
+
+    &#{$self}--black {
+      background-image: url("#{$path-img}/logos/logo-short-black.svg");
+    }
+
+    &#{$self}--white {
+      background-image: url("#{$path-img}/logos/logo-short-white.svg");
+    }
+
+  }
+
+  &--small {
+    width: rem(52);
+    height: rem(30);
+    background-image: url("#{$path-img}/logos/logo-mark-color.svg");
+
+    &#{$self}--black {
+      background-image: url("#{$path-img}/logos/logo-mark-black.svg");
+    }
+
+    &#{$self}--white {
+      background-image: url("#{$path-img}/logos/logo-mark-white.svg");
+    }
+
+    &#{$self}--alt {
+      width: rem(80);
+      height: rem(14.5);
+      background-image: url("#{$path-img}/logos/logo-short-color.svg");
+
+      &#{$self}--black {
+        background-image: url("#{$path-img}/logos/logo-short-black.svg");
+      }
+
+      &#{$self}--white {
+        background-image: url("#{$path-img}/logos/logo-short-white.svg");
+      }
+    }
+  }
+
+  &--tiny {
+    width: $fz-base;
+    height: $fz-base;
+    margin-top: ($lh-base - 1rem) / 2;
+    margin-bottom: ($lh-base - 1rem) / 2;
+    background-image: url("#{$path-img}/logos/logo-mark-black.svg");
+
+    &#{$self}--color {
+      background-image: url("#{$path-img}/logos/logo-mark-color.svg");
+    }
+
+    &#{$self}--white {
+      background-image: url("#{$path-img}/logos/logo-mark-white.svg");
+    }
+  }
+
+}
+
+.bracket-wrap {
+  @include bracket-wrap;
+}

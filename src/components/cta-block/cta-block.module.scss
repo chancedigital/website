@@ -1,0 +1,85 @@
+.block {
+  @include section-padded-y;
+  @include section-color(var(--cd-xlight-gray));
+  @include full-width;
+}
+
+.container {
+	@include make-container(wide);
+}
+
+.heading {
+	@include section-heading;
+}
+
+.contentWrapper {
+	display: grid;
+	grid-template-columns: auto;
+	gap: $mg-vertical-sm;
+
+	@include breakpoint(medium) {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	@include breakpoint(large) {
+		gap: $mg-vertical;
+	}
+}
+
+.content {
+	> p:first-child {
+		margin-top: 0;
+	}
+}
+
+.button {
+	//
+}
+
+.reviews {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.reviewWrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	will-change: height;
+	transform: translateY(rem(24) * -1);
+	transition:
+		opacity 750ms ease-out,
+		transform 750ms ease-out;
+	opacity: 0;
+	pointer-events: none;
+
+	&--active {
+		position: relative;
+		transform: translateY(0);
+		opacity: 1;
+		pointer-events: auto;
+	}
+}
+
+.review {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.reviewFooter {
+	@include font-accent;
+	@include text-sm;
+	margin-top: 2em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.reviewWrapper {
+		transform: translateY(0) !important;
+	}
+}

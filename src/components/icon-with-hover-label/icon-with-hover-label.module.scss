@@ -1,0 +1,42 @@
+$block: icon;
+
+.icon {
+	display: flex;
+	position: relative;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	user-select: none;
+}
+
+.label {
+	position: absolute;
+	bottom: 0;
+	margin: 0;
+	transform: translateY(0);
+	transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+	opacity: 0;
+	font-size: rem(14);
+	white-space: nowrap;
+	@include font-accent;
+
+	.icon:focus &,
+	.icon:focus-within &,
+	.icon:hover & {
+		transform: translateY(rem(14));
+		opacity: 1;
+	}
+}
+
+.img {
+	max-width: rem(60);
+	transform: translateY(0);
+	transition: transform 0.5s ease-out;
+
+	.icon:focus &,
+	.icon:focus-within &,
+	.icon:hover & {
+		transform: translateY(rem(8) * -1);
+	}
+}

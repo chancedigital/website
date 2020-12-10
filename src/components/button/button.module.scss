@@ -1,0 +1,244 @@
+@mixin button-box-shadow($color: var(--cd-green)) {
+	box-shadow: 4px -4px 0 transparent;
+
+	&:hover:not(:active) {
+		box-shadow: -4px 4px 0 $color;
+	}
+}
+
+// Overrides for submit input buttons.
+// Input elements do not support pseudo elements :(
+@mixin input-override {
+	@at-root {
+		input[type="submit"].button {
+			@content;
+		}
+	}
+}
+
+.button {
+	@include button-box-shadow(var(--cd-green));
+
+	&,
+	&:link,
+	&:visited {
+		@include font-accent;
+		display: inline-block;
+		position: relative;
+		width: auto;
+		height: auto;
+		margin-right: $mg-horiz / 2;
+		margin-bottom: $mg-vertical-sm / 2;
+		padding: $mg-horiz;
+		transform: translate(0, 0);
+		transition: transform 200ms ease-out, background 200ms ease-out,
+			box-shadow 200ms ease-out, border 200ms ease-out, color 200ms ease-out;
+		border: 2px solid var(--cd-green);
+		border-radius: 0;
+		background: transparent;
+		color: var(--cd-black);
+		font-size: rem(14);
+		font-weight: 600;
+		text-align: center;
+		text-shadow: none;
+		vertical-align: middle;
+		cursor: pointer;
+	}
+
+	&::before {
+		content: "";
+		position: absolute;
+		z-index: -1;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 500ms cubic-bezier(0.9, -0.05, 0.25, 1);
+		background: var(--cd-green);
+	}
+
+	&:hover,
+	&:focus {
+		transform: translate(0, 0);
+		border-color: var(--cd-white);
+		color: var(--cd-white);
+		text-decoration: none;
+
+		&::before {
+			transform: scaleX(1);
+		}
+	}
+
+	&:hover:not(:active) {
+		transform: translate(4px, -4px);
+	}
+
+	@include input-override {
+		@include button-hover-override(var(--cd-green));
+	}
+
+	&--disabled {
+		opacity: 0.3;
+		cursor: default;
+
+		&::before {
+			display: none !important;
+		}
+
+		&:hover,
+		&:active {
+			transform: translate(0, 0) !important;
+			box-shadow: none !important;
+		}
+
+		&:hover,
+		&:focus {
+			border-color: var(--cd-green);
+			background: transparent;
+			color: var(--cd-black);
+		}
+	} // disabled
+
+	&--block {
+		width: 100%;
+		margin-right: 0;
+		margin-bottom: $mg-vertical-sm;
+	} // block
+
+	&--secondary {
+		@include button-box-shadow(var(--cd-red));
+
+		&,
+		&:link,
+		&:visited {
+			border-color: var(--cd-red);
+		}
+
+		&:hover,
+		&:focus {
+			border-color: var(--cd-white);
+			color: var(--cd-white);
+		}
+
+		&::before {
+			background: var(--cd-red);
+		}
+
+		&[disabled] {
+			&:hover,
+			&:focus {
+				border-color: var(--cd-red);
+				background: transparent;
+				color: var(--cd-black);
+			}
+		}
+
+		@include input-override {
+			@include button-hover-override(var(--cd-red));
+		}
+	} // secondary
+
+	&--tertiary {
+		@include button-box-shadow(var(--cd-black));
+
+		&,
+		&:link,
+		&:visited {
+			border-color: var(--cd-black);
+			color: var(--cd-black);
+		}
+
+		&:hover,
+		&:focus {
+			border-color: var(--cd-white);
+			color: var(--cd-white);
+		}
+
+		&::before {
+			background: var(--cd-black);
+		}
+
+		&[disabled] {
+			&:hover,
+			&:focus {
+				border-color: var(--cd-black);
+				background: transparent;
+				color: var(--cd-black);
+			}
+		}
+
+		@include input-override {
+			@include button-hover-override(var(--cd-black));
+		}
+	} // tertiary
+
+	&--inverted {
+		&,
+		&:link,
+		&:visited {
+			border-color: var(--cd-white);
+			background: none;
+			color: var(--cd-white);
+		}
+
+		&:hover,
+		&:focus {
+			border-color: var(--cd-white);
+			color: var(--cd-green);
+		}
+
+		&::before {
+			background: var(--cd-white);
+		}
+
+		@include input-override {
+			@include button-hover-override(var(--cd-white));
+		}
+	} // inverted
+
+	&--small {
+		padding: #{$mg-horiz / 2};
+		border-width: 1px;
+		font-size: rem(12);
+	} // small
+
+	&--loading {
+		&::after {
+			display: none;
+		}
+
+		.loading--active {
+			margin-bottom: -1px;
+			margin-left: $mg-horiz / 2;
+		}
+
+		&:hover .loading--active,
+		&:focus .loading--active {
+			@include icon("spinner", "white");
+		}
+	} // loading
+
+	&--wobble {
+		//
+	} // wobble
+
+	&--on-bg-light-gray {
+		&:hover,
+		&:focus {
+			border-color: var(--cd-light-gray);
+		}
+	} // on-bg-light-gray
+
+	&--on-bg-xlight-gray {
+		&:hover,
+		&:focus {
+			border-color: var(--cd-xlight-gray);
+		}
+	} // bg-xlight-gray
+}
+
+.inner {
+	//
+}

@@ -1,0 +1,49 @@
+.base {
+  position: relative;
+  padding: rem(40) rem(20) rem(20);
+  border: 1px solid var(--cd-xlight-gray);
+  border-top-left-radius: rem(10);
+  border-bottom-right-radius: rem(10);
+  background: var(--cd-white);
+
+  @include breakpoint(medium) {
+    padding: rem(60) rem(40) rem(40);
+  }
+}
+
+.heading {
+	@include font-accent;
+	display: block;
+	position: absolute;
+	top: rem(8) * -1;
+	left: rem(10);
+	margin: 0;
+	padding: 0 rem(10);
+	background: #fff;
+	font-size: rem(14);
+	white-space: nowrap;
+
+	@include breakpoint(medium) {
+		left: rem(20);
+		padding: 0 rem(20);
+	}
+
+	&:after {
+		content: "";
+		display: block;
+		position: absolute;
+		top: rem(32);
+		width: rem(32);
+		height: rem(2);
+		background: var(--cd-green);
+
+		@include breakpoint(medium) {
+			top: rem(43);
+		}
+	}
+}
+
+.content {
+	margin: 0;
+	@include text-sm;
+}

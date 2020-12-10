@@ -1,0 +1,72 @@
+@charset "utf-8";
+
+@include build-font-family("ibm-plex-mono", "ibm-plex-mono", $ibm-plex-mono);
+@include build-font-family("ibm-plex-sans", "ibm-plex-sans", $ibm-plex-sans);
+
+:root {
+	@each $color, $value in $brand-colors {
+		// Need to avoid using color key in interpolation, as sass can parse those
+		// as colors and this could create a bug here. This ensures that the color
+		// key is correctly interpolated as a string.
+		--#{unquote("" + $color)}: #{$value};
+	}
+	--gradient-primary: #{$gradient-primary};
+	--reach-skip-nav: 1;
+}
+
+@import "_vendor/normalize";
+@import "_vendor/prismjs";
+@import "base/base";
+
+// Offsets anchor links by the size of the fixed header
+// Should be calculated, probably
+* {
+	scroll-margin-top: 76px;
+	@include breakpoint(medium) {
+		scroll-margin-top: 92px;
+	}
+}
+
+[data-reach-skip-nav-link] {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	border: 0;
+	pointer-events: none;
+
+	&:focus {
+		position: fixed;
+		z-index: 10;
+		top: 10px;
+		left: 10px;
+		width: auto;
+		height: auto;
+		padding: 1rem;
+		clip: auto;
+		background: var(--cd-white);
+		pointer-events: auto;
+	}
+}
+
+body.js #site-layout-wrapper {
+	transition: opacity 1000ms ease;
+}
+
+body[data-transition-status="idle"] #site-layout-wrapper {
+	opacity: 0;
+}
+
+body[data-transition-status="started"] #site-layout-wrapper {
+	opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		transition: none !important;
+		animation: none !important;
+	}
+}

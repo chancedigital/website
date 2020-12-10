@@ -1,0 +1,67 @@
+.nav {
+	will-change: transform, height;
+
+	@include breakpoint($nav-menu-breakpoint-down down) {
+		overflow: hidden;
+	}
+
+	@include breakpoint($nav-menu-breakpoint-down down) {
+		//display: none;
+		position: absolute;
+		top: calc(100% - #{rem($grid-gap-sm)});
+		right: $grid-gap-sm;
+		transition: box-shadow 800ms ease-out 300ms;
+
+		@include breakpoint(medium) {
+			top: calc(100% - #{rem($grid-gap)});
+			right: $grid-gap;
+		}
+
+		&--active {
+			box-shadow: $global-drop-shadow;
+		}
+	}
+}
+
+.item {
+	@include text-sm;
+	@include font-accent;
+	font-style: none;
+
+	@include breakpoint($nav-menu-breakpoint-up) {
+		&:not(:last-child) {
+			margin-right: rem(32);
+		}
+	}
+
+	@include breakpoint($nav-menu-breakpoint-down down) {
+		display: block;
+		padding: rem(8) rem(16);
+
+		&:first-child {
+			padding-top: rem(16);
+		}
+
+		&:last-child {
+			padding-bottom: rem(16);
+		}
+	}
+}
+
+.link {
+	@include text-link;
+	color: $cd-green;
+	font-weight: inherit;
+	text-transform: inherit;
+	cursor: pointer;
+}
+
+.menu {
+	@include breakpoint($nav-menu-breakpoint-down down) {
+		display: block;
+		transition: transform 500ms ease-in-out;
+		transition-delay: 0.4s;
+		background: var(--cd-white);
+		box-shadow: none;
+	}
+}

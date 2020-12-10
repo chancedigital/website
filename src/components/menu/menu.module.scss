@@ -1,0 +1,13 @@
+.base {
+  @include global-nav-menu;
+}
+
+.link {
+	&--button {
+		@include unbutton;
+	}
+}
+
+.item {
+	//
+}

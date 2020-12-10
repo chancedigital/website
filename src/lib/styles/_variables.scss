@@ -1,0 +1,223 @@
+@import "utils/rem";
+@import "utils/color-utils";
+
+/// Chance Digital Green
+$cd-green: #66c62e;
+
+/// Chance Digital Green (light variant)
+$cd-green-light: saturate(lighten($cd-green, 10%), 5);
+
+/// Chance Digital Green (dark variant)
+$cd-green-dark: desaturate(darken($cd-green, 6%), 8);
+
+/// Chance Digital Green (high-contrast variant)
+$cd-green-high-contrast: desaturate(darken($cd-green, 14%), 8);
+
+/// Chance Digital Green (high-contrast dark variant)
+$cd-green-dark-high-contrast: desaturate(darken($cd-green, 20%), 8);
+
+/// Chance Digital Green (high-contrast x-dark variant)
+$cd-green-xdark-high-contrast: desaturate(darken($cd-green, 24%), 8);
+
+/// Chance Digital Red
+$cd-red: #ff5e43;
+
+/// Chance Digital Gold
+$cd-gold:#ffbc14;
+
+/// Chance Digital Blue
+$cd-blue: #1ea4e0;
+
+/// Chance Digital Dark Gray
+$cd-dark-gray: #545654;
+
+/// Chance Digital X-Dark Gray
+$cd-xdark-gray: #333533;
+
+/// Chance Digital Medium Gray
+$cd-medium-gray: #999c99;
+
+/// Chance Digital Light Gray
+$cd-light-gray: #c0c4c0;
+
+/// Chance Digital X-Light Gray
+$cd-xlight-gray: #eef2ee;
+
+/// Chance Digital Border Gray
+$cd-border-gray: desaturate(darken($cd-light-gray, 15%), 20);
+
+/// Global White
+$white: #ffffff;
+
+/// Global Black
+$black: #202120;
+
+/// Dark Black
+$black-dark: #000000;
+
+/// IBM Plex Mono font-family definitions
+$ibm-plex-mono: (
+	normal: (
+		200: "IBMPlexMono-Light",
+		400: "IBMPlexMono-Regular",
+		600: "IBMPlexMono-SemiBold",
+	),
+	italic: (
+		200: "IBMPlexMono-LightItalic",
+		400: "IBMPlexMono-Italic",
+		600: "IBMPlexMono-SemiBoldItalic",
+	),
+);
+
+/// IBM Plex Sans font-family definitions
+$ibm-plex-sans: (
+	normal: (
+		200: "IBMPlexSans-Light",
+		400: "IBMPlexSans-Regular",
+		600: "IBMPlexSans-SemiBold",
+	),
+	italic: (
+		200: "IBMPlexSans-LightItalic",
+		400: "IBMPlexSans-Italic",
+		600: "IBMPlexSans-SemiBoldItalic",
+	),
+);
+
+/// Global monospace font family
+$ff-mono: "ibm-plex-mono", "Consolas", "Monaco", "Andale Mono", "Ubuntu Mono", monospace;
+
+/// Global sans serif font family
+$ff-sans: "ibm-plex-sans", helvetica, arial, sans-serif;
+
+/// Global body font family
+/// @alias $ff-sans
+$ff-body: $ff-sans;
+
+/// Global heading font family
+/// @alias $ff-mono
+$ff-heading: $ff-mono;
+
+/// Global code font family
+/// @alias $ff-mono
+$ff-code: $ff-mono;
+
+/// Global accent font family
+/// @alias $ff-mono
+$ff-accent: $ff-mono;
+
+/// Global normal font weight
+$fw-normal: 300;
+
+/// Global bold font weight
+$fw-bold: 500;
+
+/// Global vertical margin
+$mg-vertical: rem(64);
+
+/// Global vertical margin (small screens)
+$mg-vertical-sm: rem(24);
+
+/// Global horizontal margin
+$mg-horiz: rem(16);
+
+/// Global grid gap
+$grid-gap: rem(24);
+
+/// Global grid gap (small screens)
+$grid-gap-sm: rem(16);
+
+/// Map of max-width values for site containers
+$site-containers: (
+  narrow: 800,
+  default: 960,
+  wide: 1200,
+  xwide: 1600,
+);
+
+/// Full height value
+$full-height: calc(100vh - #{$grid-gap * 2});
+
+/// Full height value (small screens)
+$full-height-sm: calc(100vh - #{$grid-gap-sm * 2});
+
+
+/// Global line height
+$lh-base: 1.75;
+
+/// Global line height (small screens)
+$lh-base-sm: 1.6;
+
+/// Heading line height
+$lh-heading: 1.1;
+
+/// Global fonts size
+/// This is set at the root level and must be a pixel value.
+$fz-base: 16px;
+
+/// Path to image assets, relative to the site root
+$path-img: "/img";
+
+/// Path to font assets, relative to the site root
+$path-fonts: "/fonts";
+
+/// Site primary gradient
+$gradient-primary: brand-gradient($cd-green);
+
+/// Global border color (light variant)
+/// @alias $cd-border-gray
+$border-color-light: $cd-border-gray;
+
+/// Global drop shadow
+$global-drop-shadow: 0 rem(20) rem(70) rem(-30) rgba($black, 0.5);
+
+$brand-colors: (
+  cd-green: $cd-green,
+  cd-green-light: $cd-green-light,
+  cd-green-dark: $cd-green-dark,
+  cd-red: $cd-red,
+  cd-gold: $cd-gold,
+  cd-blue: $cd-blue,
+  cd-xdark-gray: $cd-xdark-gray,
+  cd-dark-gray: $cd-dark-gray,
+  cd-medium-gray: $cd-medium-gray,
+  cd-light-gray: $cd-light-gray,
+  cd-xlight-gray: $cd-xlight-gray,
+  cd-border-gray: $cd-border-gray,
+  cd-white: $white,
+  cd-black: $black,
+  color-text: $black,
+  color-text-heading: $black,
+  color-text-pre: $cd-dark-gray,
+);
+
+$contrast-colors: (
+  high: (
+    cd-green: $cd-green-high-contrast,
+    cd-green-dark: $cd-green-dark-high-contrast,
+    cd-green-light: $cd-green-high-contrast,
+    cd-dark-gray: $cd-xdark-gray,
+    cd-medium-gray: $cd-xdark-gray,
+    cd-light-gray: $cd-medium-gray,
+    cd-xlight-gray: $white,
+    cd-border-gray: $white,
+    black: $black-dark,
+    color-text: $black-dark,
+    color-text-heading: $black-dark,
+    color-text-pre: $cd-xdark-gray,
+  ),
+  highest: (
+    cd-green: $cd-green-dark-high-contrast,
+    cd-green-dark: $cd-green-xdark-high-contrast,
+    cd-green-light: $cd-green-dark-high-contrast,
+    cd-xdark-gray: $black-dark,
+    cd-dark-gray: $black-dark,
+    cd-medium-gray: $black-dark,
+    cd-light-gray: $black-dark,
+    cd-xlight-gray: $white,
+    cd-border-gray: $white,
+    black: $black-dark,
+    color-text: $black-dark,
+    color-text-heading: $black-dark,
+    color-text-pre: $black-dark,
+  ),
+);

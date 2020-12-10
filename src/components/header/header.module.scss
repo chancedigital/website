@@ -1,0 +1,52 @@
+$logo-width: 260;
+$logo-height: 44;
+.base {
+	// Hard-coding so the SVG doesn't scale poorly in buggy browsers
+
+	@include full-width;
+	display: grid;
+	position: fixed;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	grid-template-columns: rem($logo-width) auto;
+	gap: rem(15);
+	padding: rem($grid-gap-sm);
+	transition: background 0.2s ease-out;
+
+	@include breakpoint(medium) {
+		padding: rem($grid-gap);
+	}
+
+	&--sticky {
+		background: var(--cd-white);
+	}
+}
+
+.logo {
+	margin: 0;
+
+	img,
+	svg {
+		display: block;
+		width: rem($logo-width);
+		height: rem($logo-height);
+	}
+}
+
+.navWrapper {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	padding-right: rem(14);
+
+	@include breakpoint(medium) {
+		padding-right: rem($grid-gap);
+	}
+}
+
+.menuToggle {
+	@include breakpoint($nav-menu-breakpoint-up) {
+		display: none;
+	}
+}
