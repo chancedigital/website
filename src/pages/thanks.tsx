@@ -1,5 +1,10 @@
 import * as React from "react";
-import PageHeader from "$components/page-header";
+import {
+	PageHeader,
+	PageTitle,
+	PageSubtitle,
+	PageHeaderButton,
+} from "$components/page-header";
 import { NextSeo as SEO } from "next-seo";
 import { PageComponent } from "$lib/types";
 // const styles = require("./thanks.module.scss");
@@ -11,13 +16,16 @@ const Thanks: PageComponent<ThanksProps> = () => {
 				title="Thank You"
 				description="We can't wait to see how we can help! We'll review and get back to you within one business day."
 			/>
-			<PageHeader
-				buttonHref="/"
-				buttonText="Go Back Home"
-				fullHeight={true}
-				title="Thanks a ton!"
-				innerContent="We can't wait to see how we can help! We'll review and get back to you within one business day."
-			/>
+			<PageHeader fullHeight clamped>
+				<div>
+					<PageTitle>Thanks a ton!</PageTitle>
+					<PageSubtitle>
+						We can't wait to see how we can help! We'll review and get back to
+						you within one business day.
+					</PageSubtitle>
+					<PageHeaderButton href="/">Go Back Home</PageHeaderButton>
+				</div>
+			</PageHeader>
 		</React.Fragment>
 	);
 };

@@ -1,13 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-// import { getStripe } from "$lib/get-stripe";
-
-// const stripe = getStripe();
+import { getStripeKey } from "$lib/get-stripe-key";
 
 function setup(req: NextApiRequest, res: NextApiResponse) {
-	res.send({
-		publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-		basicPrice: process.env.STRIPE_BASIC_PRICE_ID,
-	});
+	try {
+		res.send({
+			publishableKey: getStripeKey("STRIPE_PUBLISHABLE_KEY"),
+		});
+	} catch (error) {
+		console.error(`⚠️ Publishable key not found.`);
+		res.status(400).send({
+			publishableKey: null,
+			error,
+		});
+	}
 }
 
 export default setup;

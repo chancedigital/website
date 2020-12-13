@@ -1,15 +1,3 @@
-.section {
-  $self: &;
-  @include section-padded-y;
-  @include full-width;
-  overflow: hidden;
-  background: var(--cd-white);
-}
-
-.container {
-	@include make-container(wide);
-}
-
 .heading {
 	@include section-heading;
 }

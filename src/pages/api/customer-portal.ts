@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getStripe } from "$lib/get-stripe";
+import { config } from "$src/site-config";
 
 const stripe = getStripe();
 
@@ -11,10 +12,7 @@ async function customerPortal(req: NextApiRequest, res: NextApiResponse) {
 
 	// This is the url to which the customer will be redirected when they are done
 	// managign their billing with the portal.
-	const returnUrl =
-		process.env.NODE_ENV === "development"
-			? "http://localhost:3000"
-			: "https://chancedigital.io";
+	const returnUrl = config.siteUrl;
 
 	const portalsession = await stripe.billingPortal.sessions.create({
 		customer: checkoutsession.customer as string,

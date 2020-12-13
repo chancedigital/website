@@ -2,6 +2,8 @@ const STRIPE_KEY_PREFIXES = [
 	"STRIPE_PUBLISHABLE_KEY",
 	"STRIPE_SECRET_KEY",
 	"STRIPE_WEBHOOK_SECRET",
+	"STRIPE_BASIC_PRICE_ID",
+	"STRIPE_BASIC_HOSTING_ID",
 ] as const;
 
 export function getStripeKey(prefix: StripeKeyPrefix): string {

@@ -2,6 +2,11 @@ import * as React from "react";
 import cx from "clsx";
 import { useId } from "@reach/auto-id";
 import TextCard from "$components/text-card";
+import {
+	BasicSection,
+	BasicSectionHeading,
+	BasicSectionInner,
+} from "$components/basic-section";
 const styles = require("./capabilities.module.scss");
 
 const CARDS = [
@@ -29,15 +34,13 @@ export interface CapabilitiesProps
 const Capabilities: React.FC<CapabilitiesProps> = ({ className, ...props }) => {
 	const titleId = `capes-${useId()}`;
 	return (
-		<section
+		<BasicSection
 			aria-labelledby={titleId}
 			className={cx(styles.section, className)}
 			{...props}
 		>
-			<div className={styles.container}>
-				<h2 id={titleId} className={styles.heading}>
-					Things We Do
-				</h2>
+			<BasicSectionInner>
+				<BasicSectionHeading id={titleId}>Things We Do</BasicSectionHeading>
 				<ul className={styles.list}>
 					{CARDS.map((card) => (
 						<li key={card.heading} className={styles.item}>
@@ -45,8 +48,8 @@ const Capabilities: React.FC<CapabilitiesProps> = ({ className, ...props }) => {
 						</li>
 					))}
 				</ul>
-			</div>
-		</section>
+			</BasicSectionInner>
+		</BasicSection>
 	);
 };
 

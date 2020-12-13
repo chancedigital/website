@@ -95,7 +95,7 @@ const config: Config = (function ({
 	siteTitle: "Chance Digital",
 	siteUrl:
 		process.env.NODE_ENV === "development"
-			? "http://localhost:3000"
+			? "https://localhost:3030"
 			: "https://chancedigital.io",
 });
 

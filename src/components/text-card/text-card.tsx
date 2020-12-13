@@ -5,19 +5,21 @@ const styles = require("./text-card.module.scss");
 export interface TextCardProps
 	extends React.ComponentPropsWithoutRef<"section"> {
 	heading: string;
-	content: string;
+	content?: string;
 }
 
 export const TextCard: React.FC<TextCardProps> = ({
 	className,
 	content,
 	heading,
+	children,
 	...props
 }) => {
 	return (
 		<div className={cx(styles.base, className)} {...props}>
 			<h3 className={styles.heading}>{heading}</h3>
-			<p className={styles.content}>{content}</p>
+			{content && <p className={styles.content}>{content}</p>}
+			{children}
 		</div>
 	);
 };

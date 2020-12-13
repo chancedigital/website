@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getStripe } from "$lib/get-stripe";
+import { config } from '$src/site-config';
 
 const stripe = getStripe();
 
@@ -7,10 +8,7 @@ async function createCheckoutSession(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	const domainURL =
-		process.env.NODE_ENV === "development"
-			? "http://localhost:3000"
-			: "https://chancedigital.io";
+	const domainURL = config.siteUrl
 	const { priceId } = req.body;
 
 	// Create new Checkout Session for the order
@@ -30,8 +28,8 @@ async function createCheckoutSession(
 				},
 			],
 			// ?session_id={CHECKOUT_SESSION_ID} means the redirect will have the session ID set as a query param
-			success_url: `${domainURL}/success?session_id={CHECKOUT_SESSION_ID}`,
-			cancel_url: `${domainURL}/canceled`,
+			success_url: `${domainURL}/billing/success?session_id={CHECKOUT_SESSION_ID}`,
+			cancel_url: `${domainURL}/billing`,
 		});
 
 		res.send({ sessionId: session.id });

@@ -1,0 +1,20 @@
+.headerContent {
+	@include make-grid(1.5, 1);
+
+	@include breakpoint(small only) {
+		grid-template-rows: minmax(rem(200), auto) auto;
+
+		> *:first-child {
+			grid-row: 2 / 3;
+		}
+
+		> *:last-child {
+			top: -40px;
+			grid-row: 1 / 2;
+		}
+	}
+
+	> * {
+		align-self: center;
+	}
+}

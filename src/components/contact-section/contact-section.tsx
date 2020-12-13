@@ -1,10 +1,11 @@
 import * as React from "react";
-import cx from "clsx";
 import { useRouter } from "next/router";
 import * as Yup from "yup";
 import fetch from "unfetch";
 import { Form, FormInput, FormTextarea } from "$components/form";
-const styles = require("./contact-section.module.scss");
+import { BasicSection, BasicSectionInner } from "$components/basic-section";
+
+// const styles = require("./contact-section.module.scss");
 
 const FORM_SCHEMA = Yup.object().shape({
 	firstName: Yup.string().required("First Name is required"),
@@ -32,7 +33,6 @@ function encode(data: any) {
 
 const ContactSection: React.FC<ContactSectionProps> = ({
 	children,
-	className,
 	...props
 }) => {
 	const router = useRouter();
@@ -52,12 +52,8 @@ const ContactSection: React.FC<ContactSectionProps> = ({
 	};
 
 	return (
-		<section
-			aria-label="Contact form"
-			className={cx(styles.section, className)}
-			{...props}
-		>
-			<div className={styles.container}>
+		<BasicSection aria-label="Contact form" {...props}>
+			<BasicSectionInner>
 				<Form
 					buttonText="Submit"
 					initialValues={{
@@ -116,8 +112,8 @@ const ContactSection: React.FC<ContactSectionProps> = ({
 						);
 					}}
 				/>
-			</div>
-		</section>
+			</BasicSectionInner>
+		</BasicSection>
 	);
 };
 

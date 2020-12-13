@@ -1,21 +1,21 @@
 .header {
-  display: flex;
-  position: relative;
-  align-items: center;
-  margin: $grid-gap-sm auto;
-  overflow: hidden;
-  background: var(--cd-xlight-gray);
-  background-position: center;
-  background-size: cover;
-  @include full-width;
+	display: flex;
+	position: relative;
+	align-items: center;
+	margin: $grid-gap-sm auto;
+	overflow: hidden;
+	background: var(--cd-xlight-gray);
+	background-position: center;
+	background-size: cover;
+	@include full-width;
 
-  @include breakpoint(medium) {
-    margin: $grid-gap auto;
-  }
+	@include breakpoint(medium) {
+		margin: $grid-gap auto;
+	}
 
-  &--fullHeight  {
-    @include full-height;
-  }
+	&--fullHeight {
+		@include full-height;
+	}
 }
 
 .container {
@@ -23,27 +23,14 @@
 }
 
 .content {
-	@include make-grid(1.5, 1);
 	margin: rem(100) 0;
 
-	@include breakpoint(small only) {
-		grid-template-rows: minmax(rem(200), auto) auto;
-
-		> *:first-child {
-			grid-row: 2 / 3;
-		}
-
-		> *:last-child {
-			grid-row: 1 / 2;
-		}
-	}
-
 	@include breakpoint(medium) {
-		margin: $mg-vertical 0;
+		margin: ($mg-vertical * 2) 0;
 	}
 
-	> * {
-		align-self: center;
+	&--clamped {
+		max-width: rem(680);
 	}
 }
 
