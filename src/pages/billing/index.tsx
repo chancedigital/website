@@ -14,20 +14,13 @@ import { getStripeKey } from "$lib/get-stripe-key";
 import { getStripePrices } from "$lib/get-stripe-prices";
 import { ThenArg } from "@reach/utils";
 import { ProductSection } from "$components/product-section";
-// const styles = require("./contact.module.scss");
-
-// const stripe = getStripe();
 
 const Billing: PageComponent<BillingProps> = ({ stripeKey, prices }) => {
 	const [error, setError] = React.useState<string | null>(null);
 	const [Stripe, setStripe] = React.useState<ThenArg<
 		ReturnType<typeof loadStripe>
 	> | null>(null);
-	// const [publishableKey, setPublishableKey] = React.useState<null | string>(
-	// 	null
-	// );
 	const mounted = React.useRef(true);
-	//const { data: products } = useQuery("products", getStripeProducts);
 
 	React.useEffect(() => {
 		if (stripeKey) {
@@ -86,15 +79,6 @@ const Billing: PageComponent<BillingProps> = ({ stripeKey, prices }) => {
 		[handleFetchResult]
 	);
 
-	// React.useEffect(() => {
-	// 	/* Get your Stripe publishable key to initialize Stripe.js */
-	// 	fetch(`${config.siteUrl}/api/setup`)
-	// 		.then(handleFetchResult)
-	// 		.then((json) => {
-	// 			setPublishableKey(json.publishableKey);
-	// 		});
-	// }, [handleFetchResult]);
-
 	React.useEffect(() => {
 		mounted.current = false;
 	}, []);
@@ -113,12 +97,16 @@ const Billing: PageComponent<BillingProps> = ({ stripeKey, prices }) => {
 					<PageHeaderButton href="#products">Select a Package</PageHeaderButton>
 				</div>
 			</PageHeader>
-			<ProductSection
-				createCheckoutSession={createCheckoutSession}
-				handlePurchaseResult={handleResult}
-				prices={prices}
-				stripe={Stripe}
-			/>
+			{error ? (
+				<p>Something went wrong. Try again later!</p>
+			) : (
+				<ProductSection
+					createCheckoutSession={createCheckoutSession}
+					handlePurchaseResult={handleResult}
+					prices={prices}
+					stripe={Stripe}
+				/>
+			)}
 		</React.Fragment>
 	);
 };
@@ -127,16 +115,12 @@ type BillingProps = InferGetStaticPropsType<typeof getStaticProps>;
 
 export default Billing;
 
-// pages/index.js
 export async function getStaticProps() {
 	const stripeKey = getStripeKey("STRIPE_PUBLISHABLE_KEY");
-	//const queryCache = new QueryCache();
 	const prices = await getStripePrices();
-	//await queryCache.prefetchQuery("products", getStripeProducts);
 	return {
 		props: {
 			stripeKey,
-			//dehydratedState: dehydrate(queryCache),
 			prices,
 		},
 	};
