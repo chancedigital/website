@@ -14,4 +14,4 @@ cd chancedigital
 yarn && yarn dev
 ```
 
-Open https://localhost:3000
+Open https://localhost:3030
