@@ -14,7 +14,6 @@ import { getStripeKey } from "$lib/get-stripe-key";
 import { getStripePrices } from "$lib/get-stripe-prices";
 import { ThenArg } from "@reach/utils";
 import { ProductSection } from "$components/product-section";
-import { useRouter } from 'next/router';
 
 const Billing: PageComponent<BillingProps> = ({ stripeKey, prices }) => {
 	const [error, setError] = React.useState<string | null>(null);
@@ -23,11 +22,24 @@ const Billing: PageComponent<BillingProps> = ({ stripeKey, prices }) => {
 	> | null>(null);
 	const mounted = React.useRef(true);
 
-	React.useEffect(() => {
-		if (stripeKey) {
-			loadStripe(stripeKey).then((Stripe) => setStripe(Stripe));
-		}
-	}, [stripeKey]);
+	React.useEffect(
+		function loadStripeObject() {
+			if (stripeKey) {
+				loadStripe(stripeKey)
+					.then((Stripe) => {
+						if (mounted.current) {
+							setStripe(Stripe);
+						}
+					})
+					.catch((err) => {
+						if (mounted.current) {
+							setError(err);
+						}
+					});
+			}
+		},
+		[stripeKey]
+	);
 
 	const handleResult = React.useCallback(function handleResult(result) {
 		if (result.error) {
@@ -80,11 +92,11 @@ const Billing: PageComponent<BillingProps> = ({ stripeKey, prices }) => {
 		[handleFetchResult]
 	);
 
-	React.useEffect(() => {
-		mounted.current = false;
+	React.useEffect(function setUnmounted() {
+		return function unmount() {
+			mounted.current = false;
+		};
 	}, []);
-
-
 
 	return (
 		<React.Fragment>
@@ -105,7 +117,6 @@ const Billing: PageComponent<BillingProps> = ({ stripeKey, prices }) => {
 				<p>Something went wrong. Try again later!</p>
 			) : (
 				<ProductSection
-
 					createCheckoutSession={createCheckoutSession}
 					handlePurchaseResult={handleResult}
 					prices={prices}

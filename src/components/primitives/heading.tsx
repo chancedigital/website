@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Box, BoxOwnProps } from "$components/primitives/box";
-import { forwardRef } from "$lib/utils";
+import { forwardRefWithAs } from "$lib/polymorphic";
 
 const LevelContext: React.Context<HeadingLevel> = React.createContext(
 	1 as HeadingLevel
@@ -10,7 +10,7 @@ function useHeadingLevelContext() {
 	return React.useContext(LevelContext);
 }
 
-const Section = forwardRef<"section", SectionProps>(function Section(
+const Section = forwardRefWithAs<"section", SectionProps>(function Section(
 	{ as, wrap = false, children, ...props },
 	ref
 ) {
@@ -33,7 +33,7 @@ const Section = forwardRef<"section", SectionProps>(function Section(
 	);
 });
 
-const Heading = forwardRef<"h2", HeadingProps & BoxOwnProps>(function Heading(
+const Heading = forwardRefWithAs<"h2", HeadingProps & BoxOwnProps>(function Heading(
 	{ level: levelProp, ...props },
 	ref
 ) {

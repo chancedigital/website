@@ -1,40 +1,6 @@
 import * as React from "react";
-import clsx from "clsx";
 
-export { assignRef } from "@reach/utils";
-export * from "./add-scroll-event-listener";
-export * from "./can-use-dom";
-export * from "./ease";
-export * from "./emitter";
-export * from "./get-scroll-position";
-export * from "./in-viewport";
-export * from "./is-valid-url";
-export * from "./use-animation-end-listener";
-export * from "./use-breakpoint";
-export * from "./use-interval";
-export * from "./use-measure";
-
-export function unSlashIt(str: string) {
-	return str.replace(/^(\/*)|(\/*)$/g, "");
-}
-
-export function leadingSlashIt(str: string) {
-	return "/" + unSlashIt(str);
-}
-
-export function trailingSlashIt(str: string) {
-	return unSlashIt(str) + "/";
-}
-
-export function doubleSlashIt(str: string) {
-	return "/" + unSlashIt(str) + "/";
-}
-
-export function ucFirst(str: string): string {
-	return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-export function forwardRef<ComponentType extends As, Props = {}>(
+export function forwardRefWithAs<ComponentType extends As, Props = {}>(
 	render: ForwardRefWithAsRenderFunction<ComponentType, Props>
 ): ForwardRefExoticComponentWithAs<
 	ComponentType,
@@ -46,8 +12,6 @@ export function forwardRef<ComponentType extends As, Props = {}>(
 	}
 	return Comp;
 }
-
-export { clsx as cx };
 
 export type AssignableRef<ValueType> =
 	| {

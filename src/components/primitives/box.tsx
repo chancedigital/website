@@ -1,12 +1,13 @@
 import * as React from "react";
-import { cx, forwardRef } from "$lib/utils";
+import cx from "clsx";
+import { forwardRefWithAs } from "$lib/polymorphic";
 const styles = require("./box.module.scss");
 
 const defaultElement = "div";
 
 const Box: <Elem extends React.ElementType = typeof defaultElement>(
 	props: BoxProps<Elem>
-) => React.ReactElement | null = forwardRef(function Box(
+) => React.ReactElement | null = forwardRefWithAs(function Box(
 	props: BoxOwnProps,
 	ref: React.Ref<Element>
 ) {

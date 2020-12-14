@@ -1,7 +1,4 @@
-import { inViewport } from "$lib/utils";
-
-let requestAnimFrame: any;
-let cancelAnimFrame: any;
+import { inViewport } from "$lib/in-viewport";
 
 const hide = (el: HTMLElement | SVGSVGElement) => void (el.style.opacity = "0");
 const show = (el: HTMLElement | SVGSVGElement) => void (el.style.opacity = "1");
@@ -46,7 +43,7 @@ export class Drawing {
 	draw() {
 		const progress = this.currentFrame / this.totalFrames;
 		if (1 < progress) {
-			cancelAnimFrame(this.handle);
+			window.cancelAnimationFrame(this.handle);
 			this.showImage();
 		} else {
 			this.currentFrame++;
@@ -55,7 +52,7 @@ export class Drawing {
 					this.length[j] * (1 - progress)
 				) as any;
 			}
-			this.handle = requestAnimFrame(() => {
+			this.handle = window.requestAnimationFrame(() => {
 				this.draw();
 			});
 		}
@@ -101,26 +98,6 @@ export function draw(svg: SVGElement | NodeListOf<SVGElement>) {
 		}
 		resizeTimeout = setTimeout(delayed, 200);
 	};
-
-	requestAnimFrame = (() =>
-		(window as any).requestAnimationFrame ||
-		(window as any).webkitRequestAnimationFrame ||
-		(window as any).mozRequestAnimationFrame ||
-		(window as any).oRequestAnimationFrame ||
-		(window as any).msRequestAnimationFrame ||
-		((cb: any) => {
-			window.setTimeout(cb, 1000 / 60);
-		}))();
-
-	cancelAnimFrame = (() =>
-		(window as any).cancelAnimationFrame ||
-		(window as any).webkitCancelAnimationFrame ||
-		(window as any).mozCancelAnimationFrame ||
-		(window as any).oCancelAnimationFrame ||
-		(window as any).msCancelAnimationFrame ||
-		((id: any) => {
-			window.clearTimeout(id);
-		}))();
 
 	// Handle the svgs already shown.
 	svgs.forEach((el, i) => {

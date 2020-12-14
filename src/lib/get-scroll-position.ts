@@ -1,5 +1,5 @@
 import { ScrollPosition } from "$lib/types";
-import { canUseDOM } from "$lib/utils";
+import { canUseDOM } from "$lib/can-use-dom";
 
 export function getScrollPosition(): ScrollPosition {
 	return canUseDOM()

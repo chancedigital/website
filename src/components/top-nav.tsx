@@ -2,14 +2,14 @@ import React, { useRef } from "react";
 import cx from "clsx";
 import { useSpring, animated } from "react-spring";
 import { Menu, MenuItem, MenuLink } from "$components/menu";
-import { useMeasure } from "$lib/utils/use-measure";
-import { useBreakpoint } from "$lib/utils/use-breakpoint";
+import { useMeasure } from "$lib/use-measure";
 import { usePrefersReducedMotion, usePrevious } from "@chance/hooks";
 import { VisuallyHidden } from "@reach/visually-hidden";
 const styles = require("./top-nav.module.scss");
 
 export interface TopNavProps extends React.ComponentPropsWithoutRef<"nav"> {
 	menuIsActive: boolean;
+	togglable: boolean;
 }
 
 const navItems: MenuItemData[] = [
@@ -36,10 +36,14 @@ const navItems: MenuItemData[] = [
 	id: i + 1,
 }));
 
-const TopNav: React.FC<TopNavProps> = ({ children, className, ...props }) => {
+const TopNav: React.FC<TopNavProps> = ({
+	children,
+	className,
+	togglable,
+	...props
+}) => {
 	const navRef = useRef<HTMLDivElement>(null);
 	const prefersReducedMotion = usePrefersReducedMotion(navRef);
-	const togglable = useBreakpoint('large', { dir: "down" });
 	const shouldAnimate = togglable && !prefersReducedMotion;
 	const commonProps = {
 		"aria-label": "Site navigation",
@@ -61,65 +65,65 @@ const TopNav: React.FC<TopNavProps> = ({ children, className, ...props }) => {
 	);
 };
 
-const TopNavStatic = React.forwardRef<
-	HTMLElement,
-	TopNavProps & { togglable: boolean }
->(({ menuIsActive, togglable, ...props }, ref) => {
-	return (
-		<nav
-			ref={ref}
-			style={
-				togglable
-					? {
-							height: menuIsActive ? "auto" : 0,
-							overflow: "hidden",
-					  }
-					: undefined
-			}
-			{...props}
-		/>
-	);
-});
-
-const TopNavAnimated = React.forwardRef<HTMLElement, TopNavProps>(
-	({ menuIsActive, children, ...props }, ref) => {
-		const menuWrapper = useRef<HTMLDivElement>(null);
-		const { height: viewHeight } = useMeasure(menuWrapper);
-		const prevMenuActiveState = usePrevious(menuIsActive);
-		const shouldUseAutoHeight = !!(
-			menuIsActive && prevMenuActiveState === menuIsActive
-		);
-		const { height, transform } = useSpring<any>({
-			from: {
-				height: menuIsActive ? 0 : viewHeight,
-				transform: "translate3d(0,-20px,0)",
-			},
-			to: {
-				height: menuIsActive ? viewHeight : 0,
-				transform: `translate3d(0,${menuIsActive ? 0 : `${-20}px`},0)`,
-			},
-		});
-
-		// Nav style for animations
-		let navStyle = {};
-		let navHeight = height;
-
-		// Active menu
-		if (shouldUseAutoHeight) {
-			navHeight = "auto";
-		}
-
-		navStyle = { height: navHeight, overflow: "hidden" };
-
+const TopNavStatic = React.forwardRef<HTMLElement, TopNavProps>(
+	({ menuIsActive, togglable, ...props }, ref) => {
 		return (
-			<animated.nav style={navStyle} ref={ref} {...props}>
-				<animated.div style={{ transform }} ref={menuWrapper}>
-					{children}
-				</animated.div>
-			</animated.nav>
+			<nav
+				ref={ref}
+				style={
+					togglable
+						? {
+								height: menuIsActive ? "auto" : 0,
+								overflow: "hidden",
+						  }
+						: undefined
+				}
+				{...props}
+			/>
 		);
 	}
 );
+
+const TopNavAnimated = React.forwardRef<
+	HTMLElement,
+	Omit<TopNavProps, "togglable">
+>(({ menuIsActive, children, ...props }, ref) => {
+	const menuWrapper = useRef<HTMLDivElement>(null);
+	const { height: viewHeight } = useMeasure(menuWrapper);
+	const prevMenuActiveState = usePrevious(menuIsActive);
+	const shouldUseAutoHeight = !!(
+		menuIsActive && prevMenuActiveState === menuIsActive
+	);
+	const { height, transform } = useSpring<any>({
+		from: {
+			height: menuIsActive ? 0 : viewHeight,
+			transform: "translate3d(0,-20px,0)",
+		},
+		to: {
+			height: menuIsActive ? viewHeight : 0,
+			transform: `translate3d(0,${menuIsActive ? 0 : `${-20}px`},0)`,
+		},
+	});
+
+	// Nav style for animations
+	let navStyle = {};
+	let navHeight = height;
+
+	// Active menu
+	if (shouldUseAutoHeight) {
+		navHeight = "auto";
+	}
+
+	navStyle = { height: navHeight, overflow: "hidden" };
+
+	return (
+		<animated.nav style={navStyle} ref={ref} {...props}>
+			<animated.div style={{ transform }} ref={menuWrapper}>
+				{children}
+			</animated.div>
+		</animated.nav>
+	);
+});
 
 const TopNavMenu: React.FC<{ isActive: boolean; togglable: boolean }> = (
 	props

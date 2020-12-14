@@ -3,7 +3,7 @@ import { Formik } from "formik";
 import cx from "clsx";
 import { Button } from "$components/button";
 import Field from "$components/field";
-import { useAnimationEndListener } from "$lib/utils/use-animation-end-listener";
+import { useAnimationEndListener } from "$lib/use-animation-end-listener";
 const styles = require("./form.module.scss");
 
 interface FormProps extends React.ComponentPropsWithRef<"form"> {

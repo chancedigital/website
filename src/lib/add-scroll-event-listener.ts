@@ -1,4 +1,4 @@
-import { canUseDOM } from "./can-use-dom";
+import { canUseDOM } from "$lib/can-use-dom";
 export const addScrollEventListener = (() => {
 	if (!canUseDOM()) {
 		return function loop() {

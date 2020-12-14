@@ -2,9 +2,11 @@ import * as React from "react";
 import cx from "clsx";
 import { useId } from "@reach/auto-id";
 import ResizeObserver from "resize-observer-polyfill";
-import { useInterval } from "$lib/utils/use-interval";
+import { useInterval } from "$lib/use-interval";
 import Button from "$components/button";
 const styles = require("./cta-block.module.scss");
+
+type RefObject<T> = React.RefObject<T>;
 
 const REVIEWS = [
 	{
@@ -28,55 +30,13 @@ const CTABlock: React.FC<CTABlockProps> = ({ className, ...props }) => {
 	const titleId = `cta-${useId()}`;
 	const [activeReviewIndex, setActiveIndex] = React.useState(0);
 
-	// Create refs for each review component
-	const quoteElements = React.useRef<any[]>(REVIEWS.map(React.createRef));
-
-	// Create array of height measurements for each component, then find the tallest
-	// to set a fixed height and prevent jank
-	const [sizes, setSizes] = React.useState<Map<Element, DOMRect>>(new Map());
-	const sizesRef = React.useRef(sizes);
-	React.useEffect(() => {
-		sizesRef.current = sizes;
-	});
-
-	React.useEffect(() => {
-		let animationFrameId: number | null = null;
-		let measure: ResizeObserverCallback = function measure(entries) {
-			animationFrameId = window.requestAnimationFrame(() => {
-				const map = new Map(sizesRef.current);
-				for (const entry of entries) {
-					map.set(entry.target, entry.contentRect as DOMRect);
-				}
-				setSizes(map);
-			});
-		};
-
-		const ro = new ResizeObserver(measure);
-		for (const ref of quoteElements.current) {
-			ref.current && ro.observe(ref.current);
-		}
-
-		return () => {
-			window.cancelAnimationFrame(animationFrameId!);
-			ro.disconnect();
-		};
-	}, []);
-
-	const boxHeight = React.useMemo(() => {
-		let largest: number | null = null;
-		for (const [, size] of sizes) {
-			if (largest == null || size.height > largest) largest = size.height;
-		}
-		return largest;
-	}, [sizes]);
-
-	// const boxHeight = Math.max(...sizes);
-
-	useInterval(() => {
+	useInterval(function alternateActiveReview() {
 		setActiveIndex(
 			activeReviewIndex < REVIEWS.length - 1 ? activeReviewIndex + 1 : 0
 		);
 	}, 5500);
+
+	const { quoteBoxHeight, quoteElementRefs } = useQuoteHeight();
 
 	return (
 		<section
@@ -111,13 +71,13 @@ const CTABlock: React.FC<CTABlockProps> = ({ className, ...props }) => {
 							return (
 								<li
 									key={review.source}
-									style={{ height: boxHeight || undefined }}
+									style={{ height: quoteBoxHeight || undefined }}
 									className={cx(styles.reviewWrapper, {
 										[styles["reviewWrapper--active"]]: i === activeReviewIndex,
 									})}
 								>
 									<blockquote
-										ref={quoteElements.current[i]}
+										ref={quoteElementRefs.current[i]}
 										className={styles.review}
 									>
 										{review.content}
@@ -136,5 +96,58 @@ const CTABlock: React.FC<CTABlockProps> = ({ className, ...props }) => {
 		</section>
 	);
 };
+
+function useQuoteHeight(): {
+	quoteElementRefs: React.MutableRefObject<RefObject<HTMLElement>[]>;
+	quoteBoxHeight: number;
+} {
+	const quoteElementRefs = React.useRef(
+		REVIEWS.map<RefObject<HTMLElement>>(React.createRef)
+	);
+
+	// Create array of height measurements for each component, then find the tallest
+	// to set a fixed height and prevent jank
+	const [sizes, setSizes] = React.useState<Map<Element, DOMRect>>(new Map());
+	const sizesRef = React.useRef(sizes);
+	React.useEffect(function refreshSizeRefValue() {
+		sizesRef.current = sizes;
+	});
+
+	React.useEffect(function setQuoteBoxSizes() {
+		let animationFrameId: number | null = null;
+		let measure: ResizeObserverCallback = function measure(entries) {
+			animationFrameId = window.requestAnimationFrame(() => {
+				const map = new Map(sizesRef.current);
+				for (const entry of entries) {
+					map.set(entry.target, entry.contentRect as DOMRect);
+				}
+				setSizes(map);
+			});
+		};
+
+		const ro = new ResizeObserver(measure);
+		for (const ref of quoteElementRefs.current) {
+			ref.current && ro.observe(ref.current);
+		}
+
+		return () => {
+			window.cancelAnimationFrame(animationFrameId!);
+			ro.disconnect();
+		};
+	}, []);
+
+	const quoteBoxHeight = React.useMemo(() => {
+		let largest: number | null = null;
+		for (const [, size] of sizes) {
+			if (largest == null || size.height > largest) largest = size.height;
+		}
+		return largest;
+	}, [sizes]);
+
+	return {
+		quoteElementRefs,
+		quoteBoxHeight,
+	};
+}
 
 export default CTABlock;

@@ -2,7 +2,7 @@ import * as React from "react";
 import cx from "clsx";
 import SVG, { SVGProps } from "$components/svg";
 import { VisuallyHidden } from "@reach/visually-hidden";
-import { draw } from "./drawing";
+import { draw } from "$lib/drawing";
 const styles = require("./mac-drawing.module.scss");
 
 export interface MacDrawingProps
@@ -14,7 +14,7 @@ export const MacDrawing: React.FC<MacDrawingProps> = ({
 }) => {
 	const [drawingStarted, setStartDrawing] = React.useState(false);
 	const outlineRef = React.useRef<SVGSVGElement>();
-	React.useEffect(() => {
+	React.useEffect(function startDrawing() {
 		setStartDrawing(true);
 		return draw(outlineRef.current);
 	}, []);

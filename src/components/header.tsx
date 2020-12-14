@@ -5,7 +5,9 @@ import Link from "$components/link";
 import TopNav from "$components/top-nav";
 import MenuToggle from "$components/menu-toggle";
 import { VisuallyHidden } from "@reach/visually-hidden";
-import { getScrollPosition } from "$lib/utils";
+import { getScrollPosition } from "$lib/get-scroll-position";
+import { useBreakpoint } from "$lib/use-breakpoint";
+import { first } from "lodash";
 const styles = require("./header.module.scss");
 
 export interface ScrollPosition {
@@ -38,35 +40,38 @@ function shouldStick(position: ScrollPosition, threshold: number) {
 function useHeaderIsSticky(threshold = 180) {
 	const [isSticky, setIsSticky] = React.useState<boolean>(false);
 	const isStickyRef = React.useRef(isSticky);
-	React.useEffect(() => {
+	React.useEffect(function refreshStickyRef() {
 		isStickyRef.current = isSticky;
 	});
 
-	React.useEffect((): any => {
-		let requestRunning: any = null;
-		function handleScroll() {
-			if (requestRunning == null) {
-				requestRunning = window.requestAnimationFrame(checkForStickyHeader);
+	React.useEffect(
+		function addScrollListeners() {
+			let requestRunning: any = null;
+			function handleScroll() {
+				if (requestRunning == null) {
+					requestRunning = window.requestAnimationFrame(checkForStickyHeader);
+				}
 			}
-		}
 
-		function checkForStickyHeader() {
-			const shouldBeSticky = shouldStick(getScrollPosition(), threshold);
-			if (shouldBeSticky && !isStickyRef.current) {
-				setIsSticky(true);
-			} else if (!shouldBeSticky && isStickyRef.current) {
-				setIsSticky(false);
+			function checkForStickyHeader() {
+				const shouldBeSticky = shouldStick(getScrollPosition(), threshold);
+				if (shouldBeSticky && !isStickyRef.current) {
+					setIsSticky(true);
+				} else if (!shouldBeSticky && isStickyRef.current) {
+					setIsSticky(false);
+				}
+				requestRunning = null;
 			}
-			requestRunning = null;
-		}
 
-		checkForStickyHeader();
-		window.addEventListener("scroll", handleScroll);
-		return () => {
-			window.cancelAnimationFrame(requestRunning);
-			window.removeEventListener("scroll", handleScroll);
-		};
-	}, [threshold]);
+			checkForStickyHeader();
+			window.addEventListener("scroll", handleScroll);
+			return function removeScrollListeners() {
+				window.cancelAnimationFrame(requestRunning);
+				window.removeEventListener("scroll", handleScroll);
+			};
+		},
+		[threshold]
+	);
 
 	return isSticky;
 }
@@ -78,8 +83,24 @@ const Header: React.FC<HeaderProps> = ({
 	...props
 }) => {
 	const [menuIsActive, setMenuActive] = useState<boolean>(false);
+	const togglable = useBreakpoint("medium", { dir: "down" });
 	const LogoWrapper = isHome ? "div" : "h1";
 	const navId = `top-nav-${useId()}`;
+
+	let mounted = React.useRef(false);
+	React.useEffect(
+		function closeToggleMenuOnBreakpointChange() {
+			if (!mounted.current) {
+				mounted.current = true;
+				return;
+			}
+			if (!togglable) {
+				setMenuActive(false);
+			}
+		},
+		[togglable]
+	);
+
 	return (
 		<header
 			id="site-header"
@@ -104,7 +125,12 @@ const Header: React.FC<HeaderProps> = ({
 					menuIsActive={menuIsActive}
 					navId={navId}
 				/>
-				<TopNav className={styles.nav} menuIsActive={menuIsActive} id={navId} />
+				<TopNav
+					className={styles.nav}
+					togglable={togglable}
+					menuIsActive={menuIsActive}
+					id={navId}
+				/>
 			</div>
 		</header>
 	);

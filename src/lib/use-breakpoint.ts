@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useIsomorphicLayoutEffect, createUseMatchMedia } from "@chance/hooks";
-import { breakpoints } from "$styles/breakpoints";
+import { breakpoints, breakpointKeys } from "$styles/breakpoints";
 
 export function createUseBreakpoint(effect: typeof React.useEffect) {
 	return function useBreakpointHook(
@@ -12,6 +12,13 @@ export function createUseBreakpoint(effect: typeof React.useEffect) {
 		if (typeof bpQuery === "string") {
 			if (!Object.hasOwnProperty.call(breakpoints, bpQuery)) {
 				throw Error("Breakpoint not found");
+			}
+			if (dir === "down") {
+				let bpIndex = Math.min(
+					breakpointKeys.indexOf(bpQuery) + 1,
+					breakpointKeys.length - 1
+				);
+				bpQuery = breakpointKeys[bpIndex];
 			}
 			bpVal = breakpoints[bpQuery];
 		} else {

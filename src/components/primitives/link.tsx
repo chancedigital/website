@@ -20,8 +20,9 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(
 	ref
 ) {
 	let isExternalLink = isString(props.href) && props.href.startsWith("http");
-	let isAnchorLink = isString(props.href) && props.href.startsWith("#");
-	let NextLinkComponent = isAnchorLink ? AnchorLink : NextLink;
+	let isAnchorLinkWithoutRoute =
+		isString(props.href) && props.href.startsWith("#");
+	let NextLinkComponent = isAnchorLinkWithoutRoute ? AnchorLink : NextLink;
 
 	return isExternalLink ? (
 		<a {...omit(props, nextPropNames)} ref={ref} href={props.href as string}>

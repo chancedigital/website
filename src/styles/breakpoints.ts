@@ -10,4 +10,6 @@ export const breakpoints = {
 	xxlarge: 1440,
 };
 
-export const breakpointKeys = Object.keys(breakpoints);
+export const breakpointKeys = Object.keys(
+	breakpoints
+) as (keyof typeof breakpoints)[];

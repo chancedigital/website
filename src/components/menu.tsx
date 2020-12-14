@@ -3,6 +3,58 @@ import cx from "clsx";
 import Link from "$components/link";
 const styles = require("./menu.module.scss");
 
+export interface MenuItemData {
+	id: string | number;
+	href?: string;
+	label: string;
+	options?: {
+		target?: string;
+		className?: string;
+		hideLabel?: boolean;
+		isHashLink?: boolean;
+	};
+	children?: MenuItemData[];
+	redirect?: string;
+	onClick?(event: React.MouseEvent<HTMLButtonElement, MouseEvent>): void;
+}
+
+export interface MenuProps {
+	className?: string;
+	togglable?: boolean;
+	isActive?: boolean;
+}
+
+const Menu: React.FC<MenuProps> = ({
+	className,
+	togglable,
+	isActive,
+	children,
+	...props
+}) => {
+	return (
+		<ul className={cx(styles.base, className)} {...props}>
+			{children}
+		</ul>
+	);
+};
+
+export interface MenuItemProps {
+	className?: string;
+	children: React.ReactNode;
+}
+
+const MenuItem: React.FC<MenuItemProps> = ({
+	children,
+	className,
+	...props
+}) => {
+	return (
+		<li className={cx(styles.item, className)} {...props}>
+			{children}
+		</li>
+	);
+};
+
 export interface MenuLinkProps
 	extends Omit<React.ComponentProps<typeof Link>, "onClick" | "href"> {
 	href?: string;
@@ -55,4 +107,5 @@ const MenuLink: React.FC<MenuLinkProps> = ({
 	return <span {...props}>{children}</span>;
 };
 
-export default MenuLink;
+export default Menu;
+export { Menu, MenuLink, MenuItem };
