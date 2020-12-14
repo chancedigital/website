@@ -17,7 +17,7 @@
 		padding-top: 0.5rem;
 		resize: none;
 
-		@include breakpoint(medium) {
+		@media screen and (--bp-medium) {
 			max-height: rem(150);
 		}
 	}

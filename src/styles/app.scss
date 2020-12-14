@@ -3,6 +3,16 @@
 @include build-font-family("ibm-plex-mono", "ibm-plex-mono", $ibm-plex-mono);
 @include build-font-family("ibm-plex-sans", "ibm-plex-sans", $ibm-plex-sans);
 
+// Values from styles/breakpoints.ts
+@custom-media --bp-medium (min-width: 640px);
+@custom-media --bp-large (min-width: 1024px);
+@custom-media --bp-xlarge (min-width: 1200px);
+@custom-media --bp-xxlarge (min-width: 1440px);
+@custom-media --bp-small-down (max-width: 639px);
+@custom-media --bp-medium-down (max-width: 1023px);
+@custom-media --bp-large-down (max-width: 1199px);
+@custom-media --bp-xlarge-down (max-width: 1439px);
+
 :root {
 	@each $color, $value in $brand-colors {
 		// Need to avoid using color key in interpolation, as sass can parse those
@@ -22,7 +32,7 @@
 // Should be calculated, probably
 * {
 	scroll-margin-top: 76px;
-	@include breakpoint(medium) {
+	@media screen and (--bp-medium) {
 		scroll-margin-top: 92px;
 	}
 }

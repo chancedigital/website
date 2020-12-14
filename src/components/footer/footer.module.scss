@@ -7,7 +7,7 @@
 	margin-bottom: $grid-gap-sm;
 	color: var(--cd-white);
 
-	@include breakpoint(medium) {
+	@media screen and (--bp-medium) {
 		margin-top: $grid-gap;
 		margin-bottom: $grid-gap;
 	}
@@ -50,7 +50,7 @@
 .container {
 	@include make-container(wide);
 	@include make-grid;
-	@include breakpoint(medium) {
+	@media screen and (--bp-medium) {
 		grid-template-columns: 2fr 1fr;
 	}
 }
@@ -71,7 +71,7 @@
 	display: flex;
 	justify-content: flex-start;
 
-	@include breakpoint(medium) {
+	@media screen and (--bp-medium) {
 		justify-content: flex-end;
 	}
 }

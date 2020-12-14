@@ -5,7 +5,6 @@ import { Menu, MenuItem, MenuLink } from "$components/menu";
 import { useMeasure } from "$lib/utils/use-measure";
 import { useBreakpoint } from "$lib/utils/use-breakpoint";
 import { usePrefersReducedMotion, usePrevious } from "@chance/hooks";
-import { navMenuBreakpointDown } from "$lib/styles/breakpoints";
 import { VisuallyHidden } from "@reach/visually-hidden";
 const styles = require("./top-nav.module.scss");
 
@@ -40,7 +39,7 @@ const navItems: MenuItemData[] = [
 const TopNav: React.FC<TopNavProps> = ({ children, className, ...props }) => {
 	const navRef = useRef<HTMLDivElement>(null);
 	const prefersReducedMotion = usePrefersReducedMotion(navRef);
-	const togglable = useBreakpoint(`${navMenuBreakpointDown} down`);
+	const togglable = useBreakpoint('large', { dir: "down" });
 	const shouldAnimate = togglable && !prefersReducedMotion;
 	const commonProps = {
 		"aria-label": "Site navigation",

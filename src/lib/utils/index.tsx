@@ -6,7 +6,6 @@ export * from "./add-scroll-event-listener";
 export * from "./can-use-dom";
 export * from "./ease";
 export * from "./emitter";
-export * from "./get-breakpoint-query-object";
 export * from "./get-scroll-position";
 export * from "./in-viewport";
 export * from "./is-valid-url";

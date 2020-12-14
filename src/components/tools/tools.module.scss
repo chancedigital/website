@@ -27,16 +27,16 @@
 	flex: 0 0 25%;
 	margin: $mg-vertical-sm / 2;
 
-	@include breakpoint(medium) {
+	@media screen and (--bp-medium) {
 		flex: 0 0 11%;
 		margin: $mg-vertical-sm;
 	}
 
-	@include breakpoint(large) {
+	@media screen and (--bp-large) {
 		flex: 0 0 12%;
 	}
 
-	@include breakpoint(xlarge) {
+	@media screen and (--bp-xlarge) {
 		flex: 0 0 7%;
 	}
 

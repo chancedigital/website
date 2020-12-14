@@ -25,7 +25,7 @@
 .container {
 	max-height: rem(600);
 
-	@include breakpoint(small down) {
+	@media screen and (--bp-small-down) {
 		max-width: rem(500);
 	}
 }

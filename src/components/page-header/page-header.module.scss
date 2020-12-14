@@ -9,7 +9,7 @@
 	background-size: cover;
 	@include full-width;
 
-	@include breakpoint(medium) {
+	@media screen and (--bp-medium) {
 		margin: $grid-gap auto;
 	}
 
@@ -25,7 +25,7 @@
 .content {
 	margin: rem(100) 0;
 
-	@include breakpoint(medium) {
+	@media screen and (--bp-medium) {
 		margin: ($mg-vertical * 2) 0;
 	}
 

@@ -1,7 +1,7 @@
 .headerContent {
 	@include make-grid(1.5, 1);
 
-	@include breakpoint(small only) {
+	@media screen and (--bp-small-down) {
 		grid-template-rows: minmax(rem(200), auto) auto;
 
 		> *:first-child {

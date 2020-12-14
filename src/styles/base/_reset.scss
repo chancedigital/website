@@ -1,8 +1,7 @@
 // stylelint-disable selector-max-id, no-descending-specificity
 html,
 body,
-#___gatsby,
-div[role="group"] {
+#__next {
 	position: relative;
 	max-width: 100vw;
 	height: 100%;

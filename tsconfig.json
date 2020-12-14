@@ -19,7 +19,8 @@
 			"$components/*": ["src/components/*"],
 			"$lib/*": ["src/lib/*"],
 			"$pages/*": ["src/pages/*"],
-			"$src/*": ["src/*"]
+			"$src/*": ["src/*"],
+			"$styles/*": ["src/styles/*"]
 		},
 	},
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

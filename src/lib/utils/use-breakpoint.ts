@@ -1,15 +1,31 @@
 import * as React from "react";
-import { getBreakpointQueryObject } from "$lib/utils/get-breakpoint-query-object";
 import { useIsomorphicLayoutEffect, createUseMatchMedia } from "@chance/hooks";
+import { breakpoints } from "$styles/breakpoints";
 
 export function createUseBreakpoint(effect: typeof React.useEffect) {
 	return function useBreakpointHook(
-		bpQuery: string | number,
-		defaultState: boolean = false,
-		toRem: boolean = true
+		bpQuery: keyof typeof breakpoints | number,
+		opts: { dir?: "up" | "down"; defaultState?: boolean } = {}
 	) {
-		const queryObject = getBreakpointQueryObject(bpQuery, toRem);
-		return createUseMatchMedia(effect)(queryObject, defaultState);
+		const { dir = "up", defaultState = false } = opts;
+		let bpVal: number;
+		if (typeof bpQuery === "string") {
+			if (!Object.hasOwnProperty.call(breakpoints, bpQuery)) {
+				throw Error("Breakpoint not found");
+			}
+			bpVal = breakpoints[bpQuery];
+		} else {
+			bpVal = bpQuery;
+		}
+
+		if (dir === "down") {
+			--bpVal;
+		}
+
+		return createUseMatchMedia(effect)(
+			{ [dir === "down" ? "maxWidth" : "minWidth"]: bpVal },
+			defaultState
+		);
 	};
 }
 

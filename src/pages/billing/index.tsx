@@ -14,6 +14,7 @@ import { getStripeKey } from "$lib/get-stripe-key";
 import { getStripePrices } from "$lib/get-stripe-prices";
 import { ThenArg } from "@reach/utils";
 import { ProductSection } from "$components/product-section";
+import { useRouter } from 'next/router';
 
 const Billing: PageComponent<BillingProps> = ({ stripeKey, prices }) => {
 	const [error, setError] = React.useState<string | null>(null);
@@ -83,6 +84,8 @@ const Billing: PageComponent<BillingProps> = ({ stripeKey, prices }) => {
 		mounted.current = false;
 	}, []);
 
+
+
 	return (
 		<React.Fragment>
 			<SEO title="Client Billing" />
@@ -97,10 +100,12 @@ const Billing: PageComponent<BillingProps> = ({ stripeKey, prices }) => {
 					<PageHeaderButton href="#products">Select a Package</PageHeaderButton>
 				</div>
 			</PageHeader>
+			<div id="products" />
 			{error ? (
 				<p>Something went wrong. Try again later!</p>
 			) : (
 				<ProductSection
+
 					createCheckoutSession={createCheckoutSession}
 					handlePurchaseResult={handleResult}
 					prices={prices}

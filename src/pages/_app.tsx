@@ -3,7 +3,7 @@ import { AppProps } from "next/app";
 import { DefaultSeo } from "next-seo";
 import SiteLayout from "$src/layouts/site-layout";
 import { config } from "$src/site-config";
-import "$lib/styles/app.scss";
+import "$styles/app.scss";
 
 function MyApp({ Component, pageProps }: AppProps) {
 	// For persistent layouts. Stole this idea from Adam Wathan.

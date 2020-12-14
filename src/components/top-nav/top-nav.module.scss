@@ -1,18 +1,18 @@
 .nav {
 	will-change: transform, height;
 
-	@include breakpoint($nav-menu-breakpoint-down down) {
+	@media screen and (--bp-medium-down) {
 		overflow: hidden;
 	}
 
-	@include breakpoint($nav-menu-breakpoint-down down) {
+	@media screen and (--bp-medium-down) {
 		//display: none;
 		position: absolute;
 		top: calc(100% - #{rem($grid-gap-sm)});
 		right: $grid-gap-sm;
 		transition: box-shadow 800ms ease-out 300ms;
 
-		@include breakpoint(medium) {
+		@media screen and (--bp-medium) {
 			top: calc(100% - #{rem($grid-gap)});
 			right: $grid-gap;
 		}
@@ -28,13 +28,13 @@
 	@include font-accent;
 	font-style: none;
 
-	@include breakpoint($nav-menu-breakpoint-up) {
+	@media screen and (--bp-large) {
 		&:not(:last-child) {
 			margin-right: rem(32);
 		}
 	}
 
-	@include breakpoint($nav-menu-breakpoint-down down) {
+	@media screen and (--bp-medium-down) {
 		display: block;
 		padding: rem(8) rem(16);
 
@@ -57,7 +57,7 @@
 }
 
 .menu {
-	@include breakpoint($nav-menu-breakpoint-down down) {
+	@media screen and (--bp-medium-down) {
 		display: block;
 		transition: transform 500ms ease-in-out;
 		transition-delay: 0.4s;

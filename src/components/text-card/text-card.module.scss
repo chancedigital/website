@@ -6,7 +6,7 @@
   border-bottom-right-radius: rem(10);
   background: var(--cd-white);
 
-  @include breakpoint(medium) {
+  @media screen and (--bp-medium) {
     padding: rem(60) rem(40) rem(40);
   }
 }
@@ -23,7 +23,7 @@
 	font-size: rem(14);
 	// white-space: nowrap;
 
-	@include breakpoint(medium) {
+	@media screen and (--bp-medium) {
 		left: rem(20);
 		padding: 0 rem(20);
 	}
@@ -37,7 +37,7 @@
 		height: rem(2);
 		background: var(--cd-green);
 
-		@include breakpoint(medium) {
+		@media screen and (--bp-medium) {
 			top: rem(43);
 		}
 	}

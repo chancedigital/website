@@ -19,7 +19,7 @@ ol,
 .text--std {
   margin: rem(18) 0;
 
-  @include breakpoint(medium) {
+  @media screen and (--bp-medium) {
     margin: rem(22) 0;
   }
 }
@@ -46,7 +46,7 @@ blockquote {
   padding-left: $mg-vertical-sm;
   color: var(--cd-medium-gray);
 
-  @include breakpoint(medium up) {
+  @media screen and (--bp-medium) {
     margin: $mg-vertical 0 ($mg-vertical * 1.25);
     padding-left: $mg-vertical;
   }
@@ -106,7 +106,7 @@ h1,
   margin: ($mg-vertical-sm / 1.6) 0;
   color: var(--color-text-heading);
 
-  @include breakpoint(medium) {
+  @media screen and (--bp-medium) {
     margin: ($mg-vertical-sm * 1.4) 0;
   }
 }
@@ -118,7 +118,7 @@ h2,
   margin: ($mg-vertical-sm * 1.125) 0;
   color: var(--color-text-heading);
 
-  @include breakpoint(medium) {
+  @media screen and (--bp-medium) {
     margin: ($mg-vertical-sm * 2) 0;
   }
 }
@@ -138,7 +138,7 @@ h4,
   margin: ($mg-vertical / 2) 0 ($mg-vertical / 2.5);
   font-size: rem(14);
 
-  @include breakpoint(medium) {
+  @media screen and (--bp-medium) {
     margin: ($mg-vertical / 1.5) 0 ($mg-vertical / 2.5);
   }
 }

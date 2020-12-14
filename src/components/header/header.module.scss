@@ -14,7 +14,7 @@ $logo-height: 44;
 	padding: rem($grid-gap-sm);
 	transition: background 0.2s ease-out;
 
-	@include breakpoint(medium) {
+	@media screen and (--bp-medium) {
 		padding: rem($grid-gap);
 	}
 
@@ -40,13 +40,13 @@ $logo-height: 44;
 	justify-content: flex-end;
 	padding-right: rem(14);
 
-	@include breakpoint(medium) {
+	@media screen and (--bp-medium) {
 		padding-right: rem($grid-gap);
 	}
 }
 
 .menuToggle {
-	@include breakpoint($nav-menu-breakpoint-up) {
+	@media screen and (--bp-large) {
 		display: none;
 	}
 }

@@ -14,13 +14,13 @@
 	margin: #{$mg-vertical-sm / 2} 0 0;
 	padding: 0;
 
-	@include breakpoint(medium) {
+	@media screen and (--bp-medium) {
 		grid-template-columns: repeat(2, 1fr);
 		gap: $mg-vertical;
 		margin: #{$mg-vertical / 2} 0 0;
 	}
 
-	@include breakpoint(large) {
+	@media screen and (--bp-large) {
 		grid-template-columns: repeat(4, 1fr);
 		gap: $mg-vertical-sm;
 	}
