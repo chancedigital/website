@@ -13,5 +13,3 @@
 
 [[plugins]]
   package = "netlify-plugin-cache-nextjs"
-[[plugins]]
-  package = "@sentry/netlify-build-plugin"
